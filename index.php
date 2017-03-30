@@ -16,23 +16,6 @@ if ($pdoStatement && $pdoStatement->rowCount() > 0) {
 	$categorieList = $pdoStatement->fetchAll();
 }
 
-require 'html/header.php';
-?>
-
-<section>
-	<p id="homeItro">GCLF est une superbe et ingénieuse application permettant de gérer la localisation et la recherche de ses copies légales de films</p>
-	<br /><br />
-	<form action="catalogue.php" method="get" id="homeSearch">
-		<input type="text" class="searchInput" placeholder="Titre, acteur, etc." name="q" value="" />
-		<input type="submit" class="searchSubmit" value="Rechercher"/>
-	</form>
-</section>
-<section class="listeCategories">
-	<?php foreach ($categorieList as $curCategorieInfos) : ?>
-	<a href="catalogue.php?cat_id=<?php echo $curCategorieInfos['cat_id']; ?>"><?php echo $curCategorieInfos['cat_nom'].' ('.$curCategorieInfos['nb'].')'; ?></a>&nbsp; &nbsp;
-	<?php endforeach; ?>
-</section>
-
-
-<?php
-require 'html/footer.php';
+require 'inc/view/header.php';
+require 'inc/view/home.phtml';
+require 'inc/view/footer.php';

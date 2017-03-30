@@ -1,6 +1,6 @@
 <?php
 
-namespace \inc\Model;
+namespace inc\model;
 
 class Support {
 	private $id;

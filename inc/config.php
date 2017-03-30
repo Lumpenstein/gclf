@@ -1,6 +1,9 @@
 <?php
 
+spl_autoload_register();
+
 require 'fonctions.php';
+
 
 // Connexion à la DB
 $dsn = 'mysql:dbname=gclf;host=localhost;charset=UTF8';
