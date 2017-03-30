@@ -2,6 +2,8 @@
 
 require 'inc/config.php';
 
+spl_autoload();
+
 // Page par défaut => 1
 $currentPage = 1;
 $searchTerms = '';
@@ -24,42 +26,8 @@ if (isset($_GET['cat_id'])) {
 	$categorieId = intval(trim($_GET['cat_id']));
 }
 
-// J'écris ma requête dans une variable
-$sql = '
-	SELECT fil_id, fil_titre, fil_affiche, fil_id, fil_annee, fil_synopsis
-	FROM film
-';
-// Je teste que la query (q) n'est pas vide
-$rechercheEnCours = false;
-if (!empty($searchTerms)) {
-	$rechercheEnCours = true;
-	$sql .= '
-		WHERE fil_titre LIKE :terms
-		OR fil_synopsis LIKE :terms
-		OR fil_acteurs LIKE :terms
-	';
-}
-// Je teste que la catégorie est renseignée
-if ($categorieId > 0) {
-	$sql .= '
-		WHERE cat_id = '.$categorieId.'
-	';
-}
 
-$sql .= '
-	ORDER BY fil_id DESC
-	LIMIT '.$offsetPage.', '.$nbFilmsParPage.'
-';
-// Je prépare ma requête à MySQL et je récupère le Statement
-$pdoStatement = $pdo->prepare($sql);
-if ($rechercheEnCours) {
-	$pdoStatement->bindValue(':terms', '%'.$searchTerms.'%');
-}
-
-// Si la requête a fonctionnée
-if ($pdoStatement->execute()) {
-	$filmList = $pdoStatement->fetchAll();
-}
+$filmlist = Film::getlist($offsetPage, $nbFilmsParPage, $categorieId, $searchTerms);
 
 $pageTitle = 'Catalogue';
 require 'html/header.php';
