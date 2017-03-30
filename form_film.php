@@ -177,7 +177,7 @@ if (isset($_GET['imdb'])) {
 
 // Récupère toutes les catégories pour générer le menu déroulant des catégories
 // J'appelle ma fonction car j'ai factorisé comme un pro !
-$categoriesList = getAllCat();
+$categoriesList = inc\model\Categorie::getAllCat();
 
 // Récupère tous les supports pour générer le menu déroulant des supports
 $sql = '
